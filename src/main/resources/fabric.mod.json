@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "sign",
+  "version": "${version}",
+  "name": "Sign",
+  "description": "Collects a list of all signs.",
+  "authors": [
+    "honeyfuggle"
+  ],
+  "contact": {
+    "sources": "https://github.com/Ultramicroscope/Sign"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/sign/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "wtf.ultra.SignMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "minecraft": "~1.20",
+    "java": ">=17",
+    "fabric-api": "*"
+  }
+}
