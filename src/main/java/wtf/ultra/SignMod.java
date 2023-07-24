@@ -39,7 +39,7 @@ public class SignMod implements ModInitializer {
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("dump_signs").executes(context -> {
             StringBuilder sb = new StringBuilder("\n[\n");
-            signs.forEach((pos, arr) -> sb.append("{\"xyz\":\"").append(pos.toShortString()).append("\",\"text\":[\"").append(arr[0]).append("\",\"").append(arr[1]).append("\",\"").append(arr[2]).append("\",\"").append(arr[3]).append("\"]},\n"));
+            signs.forEach((pos, arr) -> sb.append("{\"xyz\":\"").append(pos.toShortString().replace(",", "")).append("\",\"text\":[\"").append(arr[0]).append("\",\"").append(arr[1]).append("\",\"").append(arr[2]).append("\",\"").append(arr[3]).append("\"]},\n"));
             System.out.println(sb.append("]"));
 
             return 1;
