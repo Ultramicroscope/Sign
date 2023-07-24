@@ -18,7 +18,7 @@ import java.util.*;
 
 public class SignMod implements ModInitializer {
 
-    private final Map<BlockPos, String[]> signs = new HashMap<>();
+    private final Map<BlockPos, String[]> signs = new TreeMap<>();
 
     @Override
     public void onInitialize() {
@@ -31,7 +31,7 @@ public class SignMod implements ModInitializer {
                     SignBlockEntity sign = (SignBlockEntity) blockEntity;
                     Text[] signText = sign.getText(true).getMessages(false);
                     String[] text = new String[4];
-                    for (int i = 0; i < 4; i++) text[i] = signText[i].getString();
+                    for (int i = 0; i < 4; i++) text[i] = signText[i].getString().replace("\\", "\\\\").replace("\"", "\\\"");
                     signs.put(sign.getPos().toImmutable(), text);
                 }
             });
