@@ -1,5 +1,8 @@
 package wtf.ultra;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
@@ -31,16 +34,18 @@ public class SignMod implements ModInitializer {
                     SignBlockEntity sign = (SignBlockEntity) blockEntity;
                     Text[] signText = sign.getText(true).getMessages(false);
                     String[] text = new String[4];
-                    for (int i = 0; i < 4; i++) text[i] = signText[i].getString().replace("\\", "\\\\").replace("\"", "\\\"");
+                    for (int i = 0; i < 4; i++) text[i] = signText[i].getString();
                     signs.put(sign.getPos().toImmutable(), text);
                 }
             });
         });
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("dump_signs").executes(context -> {
-            StringBuilder sb = new StringBuilder("\n[\n");
-            signs.forEach((pos, arr) -> sb.append("{\"xyz\":\"").append(pos.toShortString().replace(",", "")).append("\",\"text\":[\"").append(arr[0]).append("\",\"").append(arr[1]).append("\",\"").append(arr[2]).append("\",\"").append(arr[3]).append("\"]},\n"));
-            System.out.println(sb.append("]"));
+            Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+
+            JsonObject jsonObject = new JsonObject();
+            signs.forEach((pos, arr) -> jsonObject.add(pos.toShortString().replace(",", ""), gson.toJsonTree(arr)));
+            System.out.println(gson.toJson(jsonObject));
 
             return 1;
         })));
